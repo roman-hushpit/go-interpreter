@@ -37,6 +37,7 @@ const (
 
 	OpArray
 	OpHash
+	OpIndex
 )
 
 type Definition struct {
@@ -72,6 +73,7 @@ var definitions = map[Opcode]*Definition{
 
 	OpArray: {"OpArray", []int{2}},
 	OpHash:  {"OpHash", []int{2}},
+	OpIndex: {"OpIndex", []int{}},
 }
 
 func (ins Instructions) String() string {
