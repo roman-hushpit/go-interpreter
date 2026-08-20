@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"go-interpreter/ast"
+	"go-interpreter/code"
 	"hash/fnv"
 	"strings"
 )
@@ -12,16 +13,17 @@ type ObjectType string
 type BuiltinFunction func(args ...Object) Object
 
 const (
-	INTEGER_OBJ      ObjectType = "INTEGER"
-	STRING_OBJ       ObjectType = "STRING"
-	BOOLEAN_OBJ      ObjectType = "BOOLEAN"
-	NULL_OBJ         ObjectType = "NULL"
-	RETURN_VALUE_OBJ ObjectType = "RETURN_VALUE"
-	ERROR_OBJ        ObjectType = "ERROR"
-	FUNCTION_OBJ     ObjectType = "FUNCTION"
-	BUILTIN_OBJ      ObjectType = "BUILTIN"
-	ARRAY_OBJ        ObjectType = "ARRAY"
-	HASH_OBJ         ObjectType = "HASH"
+	INTEGER_OBJ           ObjectType = "INTEGER"
+	STRING_OBJ            ObjectType = "STRING"
+	BOOLEAN_OBJ           ObjectType = "BOOLEAN"
+	NULL_OBJ              ObjectType = "NULL"
+	RETURN_VALUE_OBJ      ObjectType = "RETURN_VALUE"
+	ERROR_OBJ             ObjectType = "ERROR"
+	FUNCTION_OBJ          ObjectType = "FUNCTION"
+	BUILTIN_OBJ           ObjectType = "BUILTIN"
+	ARRAY_OBJ             ObjectType = "ARRAY"
+	HASH_OBJ              ObjectType = "HASH"
+	COMPILED_FUNCTION_OBJ ObjectType = "COMPILED_FUNCTION_OBJECT"
 )
 
 type Object interface {
@@ -169,6 +171,15 @@ func (f *Function) Inspect() string {
 	out.WriteString("\n}")
 
 	return out.String()
+}
+
+type CompiledFunction struct {
+	Instructions code.Instructions
+}
+
+func (cf *CompiledFunction) Type() ObjectType { return COMPILED_FUNCTION_OBJ }
+func (cf *CompiledFunction) Inspect() string {
+	return fmt.Sprintf("CompiledFunction[%p]", cf)
 }
 
 type HashPair struct {
