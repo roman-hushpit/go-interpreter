@@ -436,7 +436,7 @@ func (vm *VM) callFunction(numArgs int) error {
 		return fmt.Errorf("calling non-function")
 	}
 
-	if (numArgs != fn.NumParameters) {
+	if numArgs != fn.NumParameters {
 		return fmt.Errorf("wrong number of arguments: want=%d, got=%d", fn.NumParameters, numArgs)
 	}
 
