@@ -51,6 +51,7 @@ const (
 	OpGetBuiltin
 
 	OpClosure
+	OpCurrentClosure
 )
 
 type Definition struct {
@@ -98,7 +99,8 @@ var definitions = map[Opcode]*Definition{
 
 	OpGetBuiltin: {"OpGetBuiltin", []int{1}},
 
-	OpClosure: {"OpClosure", []int{2, 1}},
+	OpClosure:        {"OpClosure", []int{2, 1}},
+	OpCurrentClosure: {"OpCurrentClosure", []int{}},
 }
 
 func (ins Instructions) String() string {
