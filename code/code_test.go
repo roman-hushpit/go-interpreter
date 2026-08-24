@@ -41,7 +41,6 @@ func TestInstructionsString(t *testing.T) {
 0003 OpConstant 2
 0006 OpConstant 65535
 0009 OpClosure 65535 255
-
 `
 	concatted := Instructions{}
 	for _, ins := range instructions {
